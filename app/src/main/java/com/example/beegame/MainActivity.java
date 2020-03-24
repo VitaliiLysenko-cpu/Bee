@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout constraintLayout;
+    ConstraintSet set = new ConstraintSet();
 
 
     @Override
@@ -23,17 +24,22 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 1; i <= 5; i++) {
             ImageView imageViewWorkerBee = new ImageView(this);
-            imageViewWorkerBee.setImageResource(R.drawable.worker_bee);
             imageViewWorkerBee.setId(imageViewWorkerBee. generateViewId ());
             constraintLayout.addView(imageViewWorkerBee);
+            imageViewWorkerBee.setImageResource(R.drawable.worker_bee);
+            set.clone(constraintLayout);
+            set.connect(imageViewWorkerBee.getId(),ConstraintSet.LEFT, constraintLayout.NO_ID,
+                    ConstraintSet.END);
+
+
         }
 
-        ConstraintSet set = new ConstraintSet();
-        changeConstraints(set);
+
+
     }
 
-    private void changeConstraints(ConstraintSet set) {
-        //set.connect();
-        //set.connect();
-    }
+  // private void changeConstraints(ConstraintSet set) {
+  //     set.connect(R.id.constraint_layout, ConstraintSet.LEFT,R.id.);
+  //     //set.connect(R.id.constraint_layout, ConstraintSet.BOTTOM, R.id.parent, ConstraintSet.TOP);
+  // }
 }
