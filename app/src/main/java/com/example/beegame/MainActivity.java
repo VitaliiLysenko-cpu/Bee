@@ -1,5 +1,6 @@
 package com.example.beegame;
 
+
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.widget.LinearLayoutCompat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,16 +31,16 @@ public class MainActivity extends AppCompatActivity {
     private void addImageView() {
         
         ImageView imageQueenBee = new ImageView(this);
-        imageQueenBee.setImageResource(R.drawable.worker_bee);
+        imageQueenBee.setImageResource(R.drawable.queen_bee);
         linearLayout.addView(imageQueenBee);
         
         LinearLayout linearWorkerBee = new LinearLayout(this);
         LinearLayout linearDroneBee = new LinearLayout(this);
         
         linearWorkerBee.setOrientation(LinearLayout.HORIZONTAL);
-        linearDroneBee.setOrientation(LinearLayout.HORIZONTAL);
-        
         linearLayout.addView(linearWorkerBee);
+        
+        linearDroneBee.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.addView(linearDroneBee);
         
         for (int i = 1; i <= 5; i++) {
@@ -49,25 +51,10 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i <= 7; i++) {
             ImageView imageDroneBee = new ImageView(this);
             imageDroneBee.setImageResource(R.drawable.drone_bee);
-            linearWorkerBee.addView(imageDroneBee);
+            linearDroneBee.addView(imageDroneBee);
         }
-        addLineSeperator();
+    
     }
     
-    private void addLineSeperator() {
-        LinearLayout lineLayout = new LinearLayout(this);
-        lineLayout.setBackgroundColor(Color.GRAY);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                2);
-        params.setMargins(0, convertDpToPixel(10), 0, convertDpToPixel(10));
-        lineLayout.setLayoutParams(params);
-        linearLayout.addView(lineLayout);
-    }
     
-    private int convertDpToPixel(float dp) {
-        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
-        float px = dp * (metrics.densityDpi / 160f);
-        return Math.round(px);
-    }
 }
