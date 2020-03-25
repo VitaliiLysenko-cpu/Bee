@@ -1,57 +1,72 @@
 package com.example.beegame;
 
-
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
-import static androidx.constraintlayout.widget.ConstraintSet.BOTTOM;
-import static androidx.constraintlayout.widget.ConstraintSet.END;
-import static androidx.constraintlayout.widget.ConstraintSet.LEFT;
-import static androidx.constraintlayout.widget.ConstraintSet.PARENT_ID;
-import static androidx.constraintlayout.widget.ConstraintSet.TOP;
-
 
 public class MainActivity extends AppCompatActivity {
     
-    ConstraintLayout constraintLayout;
-    
+    LinearLayout linearLayout;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        constraintLayout = new ConstraintLayout(this);
-        constraintLayout = findViewById(R.id.constraint_layout);
         
-        ConstraintSet set = new ConstraintSet();
+        linearLayout = findViewById(R.id.linear_layout);
         
-        ImageView imageViewQueenBee = new ImageView(this);
-        int queenBeeIdView = View.generateViewId();
-        imageViewQueenBee.setId(queenBeeIdView);
-        constraintLayout.addView(imageViewQueenBee);
-        imageViewQueenBee.setImageResource(R.drawable.queen_bee);
-        set.connect(PARENT_ID, LEFT, queenBeeIdView, LEFT, 8);
-        set.connect(PARENT_ID, TOP, queenBeeIdView, TOP, 8);
+        addImageView();
         
-        int prewIdView = queenBeeIdView;
+        
+    }
+    
+    private void addImageView() {
+        
+        ImageView imageQueenBee = new ImageView(this);
+        imageQueenBee.setImageResource(R.drawable.worker_bee);
+        linearLayout.addView(imageQueenBee);
+        
+        LinearLayout linearWorkerBee = new LinearLayout(this);
+        LinearLayout linearDroneBee = new LinearLayout(this);
+        
+        linearWorkerBee.setOrientation(LinearLayout.HORIZONTAL);
+        linearDroneBee.setOrientation(LinearLayout.HORIZONTAL);
+        
+        linearLayout.addView(linearWorkerBee);
+        linearLayout.addView(linearDroneBee);
+        
         for (int i = 1; i <= 5; i++) {
-            ImageView imageViewWorkerBee = new ImageView(this);
-            int idThisView = View.generateViewId();
-            imageViewWorkerBee.setId(idThisView);
-            constraintLayout.addView(imageViewWorkerBee);
-            imageViewWorkerBee.setImageResource(R.drawable.worker_bee);
-            set.connect(prewIdView, LEFT, idThisView, LEFT);
-            set.connect(prewIdView, BOTTOM, idThisView, TOP);
-            
-            prewIdView = idThisView;
-            set.applyTo(constraintLayout);
-            
-            
+            ImageView imageWorkerBee = new ImageView(this);
+            imageWorkerBee.setImageResource(R.drawable.worker_bee);
+            linearWorkerBee.addView(imageWorkerBee);
         }
+        for (int i = 1; i <= 7; i++) {
+            ImageView imageDroneBee = new ImageView(this);
+            imageDroneBee.setImageResource(R.drawable.drone_bee);
+            linearWorkerBee.addView(imageDroneBee);
+        }
+        addLineSeperator();
+    }
+    
+    private void addLineSeperator() {
+        LinearLayout lineLayout = new LinearLayout(this);
+        lineLayout.setBackgroundColor(Color.GRAY);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                2);
+        params.setMargins(0, convertDpToPixel(10), 0, convertDpToPixel(10));
+        lineLayout.setLayoutParams(params);
+        linearLayout.addView(lineLayout);
+    }
+    
+    private int convertDpToPixel(float dp) {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return Math.round(px);
     }
 }
