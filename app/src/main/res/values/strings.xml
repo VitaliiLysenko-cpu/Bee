@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BeeGame</string>
     <string name="swat_button">Swat</string>
+    <string name="swat">SWAT</string>
 </resources>

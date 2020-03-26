@@ -2,6 +2,7 @@ package com.example.beegame;
 
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,9 +10,10 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     
     LinearLayout linearLayout;
+    Button swat;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         
         linearLayout = findViewById(R.id.linear_layout);
-        
         addImageView();
+        addButton();
     }
     
     private void addImageView() {
@@ -51,8 +53,11 @@ public class MainActivity extends AppCompatActivity {
             setImageViewAttributes(imageDroneBee);
             linearDroneBee.addView(imageDroneBee);
         }
-        
-        Button swat = new Button(this);
+    }
+    
+    private void addButton() {
+        swat = new Button(this);
+        swat.setTag(100);
         swat.setText("Swat");
         swat.setBackgroundColor(ContextCompat.getColor(this, R.color.colorButton));
         linearLayout.addView(swat);
@@ -66,5 +71,16 @@ public class MainActivity extends AppCompatActivity {
         imageView.setLayoutParams(params);
         
         
+    }
+    
+    @Override
+    public void onClick(View v) {
+        v.getTag(100);
+        randomSwat();
+        
+    }
+    
+    private void randomSwat() {
+    
     }
 }
