@@ -4,7 +4,6 @@ import com.example.beegame.R;
 
 public class WorkerBee implements Bee {
     private int hit = 75;
-    private int copyHit = hit;
     public WorkerBee() {
     }
     
@@ -15,11 +14,6 @@ public class WorkerBee implements Bee {
     @Override
     public int image() {
         return R.drawable.worker_bee;
-    }
-    
-    @Override
-    public void recoveryHit() {
-        hit = copyHit;
     }
     
     @Override

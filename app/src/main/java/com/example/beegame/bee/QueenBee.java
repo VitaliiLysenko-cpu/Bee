@@ -4,7 +4,6 @@ import com.example.beegame.R;
 
 public class QueenBee implements Bee {
     private int hit = 100;
-    private int copyHit = hit;
     public QueenBee() {
     }
     
@@ -14,11 +13,6 @@ public class QueenBee implements Bee {
     @Override
     public int image() {
         return R.drawable.queen_bee;
-    }
-    
-    @Override
-    public void recoveryHit() {
-      hit = copyHit;
     }
     
     

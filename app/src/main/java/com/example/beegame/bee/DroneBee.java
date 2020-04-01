@@ -5,7 +5,6 @@ import com.example.beegame.R;
 
 public class DroneBee implements Bee {
     private int hit = 50;
-    private int copyHit = hit;
     public DroneBee() {
     }
     
@@ -17,11 +16,6 @@ public class DroneBee implements Bee {
     @Override
     public int image() {
         return R.drawable.drone_bee;
-    }
-    
-    @Override
-    public void recoveryHit() {
-        hit = copyHit;
     }
     
     @Override

@@ -1,6 +1,5 @@
 package com.example.beegame;
 
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,24 +20,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    
     private final int swatId = 100;
     private final int restartId = 101;
     private final int exitId = 102;
-    LinearLayout linearLayout;
-    Button swat;
-    Button restart;
-    Button exit;
+    private LinearLayout linearLayout;
+    private Button swat;
+    private Button restart;
+    private Button exit;
     private int quantityWorkerBee = 5;
     private int quantityDroneBee = 7;
     private Map<Integer, Integer> beeMap = new HashMap<>();
-    private QueenBee queenBee = new QueenBee();
-    private WorkerBee workerBee = new WorkerBee();
-    private DroneBee droneBee = new DroneBee();
     private ArrayList<Bee> bees = getBees();
     private ImageView imageBee;
     private int visible = View.VISIBLE;
     private int invisible = View.INVISIBLE;
+    private Bee randBee;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     
     private void addImageView() {
-        
+        bees = getBees();
         for (int i = 0; i < bees.size(); i++) {
             int id = View.generateViewId();
             imageBee = new ImageView(this);
@@ -73,18 +69,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         swat = new Button(this);
         restart = new Button(this);
         exit = new Button(this);
+        
         swat.setId(swatId);
         restart.setId(restartId);
         exit.setId(exitId);
+        
         swat.setText("Swat");
-        restart.setText("Rstart");
+        restart.setText("Restart");
         exit.setText("Exit");
+        
         swat.setBackgroundColor(ContextCompat.getColor(this, R.color.colorButtonSwat));
         restart.setBackgroundColor(ContextCompat.getColor(this, R.color.colorButtonRestart));
         exit.setBackgroundColor(ContextCompat.getColor(this, R.color.colorButtonExit));
+        
         swat.setVisibility(visible);
         restart.setVisibility(invisible);
         exit.setVisibility(invisible);
+        
         linearLayout.addView(swat);
         linearLayout.addView(restart);
         linearLayout.addView(exit);
@@ -106,9 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case restartId:
                 linearLayout.removeAllViews();
-                queenBee.recoveryHit();
-                workerBee.recoveryHit();
-                droneBee.recoveryHit();
+                
                 createView();
                 break;
             case exitId:
@@ -123,23 +122,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     
     private void whoHit() {
         int index = randomSwat();
-        Bee randBee = bees.get(index);
-        
+        randBee = bees.get(index);
         if (randBee.hitPoints() < 1) {
+            if (randBee instanceof QueenBee) {
+                swat.setVisibility(invisible);
+                restart.setVisibility(visible);
+                exit.setVisibility(visible);
+            }
             View viewById = linearLayout.findViewById(beeMap.get(index));
             linearLayout.removeView(viewById);
         }
         Toast.makeText(this, randBee.toString(), Toast.LENGTH_LONG).show();
-        if (queenBee.toString() == null) {
-            swat.setVisibility(invisible);
-            restart.setVisibility(visible);
-            exit.setVisibility(visible);
-        }
     }
     
     private ArrayList<Bee> getBees() {
         ArrayList<Bee> allBees = new ArrayList<>();
-        
+        QueenBee queenBee = new QueenBee();
         allBees.add(queenBee);
         for (int i = 0; i < quantityWorkerBee; i++) {
             allBees.add(new WorkerBee());
